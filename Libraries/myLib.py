@@ -5,3 +5,11 @@ listA.sort()
 zeroindex=bisect.bisect_right(listA,0) #ソートされたリスト内で0の場所を探し、右側Indexを返す
 clearlistA=listA[zeroindex:]#0以下が存在しないリストを得る
 
+# ユークリッドの互除法
+def gcd(a, b):
+	while b:
+		a, b = b, a % b
+	return a
+
+def lcm(a, b):
+	return a * b // gcd (a, b)
