@@ -1,3 +1,5 @@
+# 幅優先探索
+
 N,M = map(int,input().split())
 a = [0]*M
 b = [0]*M
