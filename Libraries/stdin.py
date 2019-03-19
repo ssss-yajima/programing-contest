@@ -35,3 +35,12 @@ import re
 s='hoge6hoge21foo:bar'
 re.findall(r'[a-z]+',s) #['hoge', 'hoge', 'foo', 'bar']
 re.findall(r'[a-z0-9]+',s) # ['hoge6hoge21foo', 'bar']
+
+### N進数
+x = 255
+print(bin(x))
+print(oct(x))
+print(hex(x))
+print(format(x,'b'))
+print(format(x,'o'))
+print(format(x,'x'))
