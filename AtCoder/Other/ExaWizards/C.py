@@ -2,19 +2,44 @@ n,q = map(int,input().split())
 s = input()
 magic = [list(input().split()) for _ in range(q)]
 
-mapping = [[] for _ in range(27)]
-positions = [0] * (n + 2) #ゴミ置き場を両端に追加
-# 位置ごとの個数と文字ごとの配列位置
-for i in range(n):
-    mapping[ord(s[i])-65].append(i+1)
-    positions[i+1] += 1
-# print(positions)      ##
-# print(mapping)  ##
+s = '+' + s + '*'
 
-for m in magic:
-    order = 1 if m[1] == 'L' else -1
-    for idx in mapping[ord(m[0])-65][::order]:
-        positions[idx-order] += positions[idx]
-        positions[idx] = 0
-    # print(m,positions)
-print(sum(positions[1:-1]))
+def move(start_idx):
+    idx = start_idx
+    char = s[idx]
+    for m in magic:
+        if m[0] == char and 1 <= idx <= n:
+            idx += 1 if m[1]=='R' else -1
+            char = s[idx]
+    return idx
+
+# 二分探索（左に消える場合）
+target = s
+idx = 0
+while len(target)>1:
+    mid = len(target)//2
+    if move(mid) == 0:
+        target = target[mid:]
+        idx += mid  
+    else:
+        target = target[:mid]
+        idx -= mid
+    print(idx, target)
+print("Left ",idx,target)
+
+target = s
+idx = 0
+while len(target)>1:
+    mid = len(target)//2
+    if move(mid)== len(s):
+        target = target[:mid]
+        idx -= mid  
+    else:
+        target = target[mid:]
+        idx += mid
+    print(idx, target)
+print("Right",idx,target)
+
+print(s)
+# for i in range(1,n+1):
+#     print(i, move(i))
