@@ -19,6 +19,9 @@ xx = [list(map(int,input().split())) for x in range(n)]
 # 0 padding
 print('{:2.0f}'.format(x))
 print('{:.2f}'.format(x))
+# 配列を一気に出力
+print(*xx, sep='\n')
+
 
 ### 初期化処理など
 # 2次元配列の初期化
