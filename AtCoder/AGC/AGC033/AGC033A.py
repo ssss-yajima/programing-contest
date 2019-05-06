@@ -1,32 +1,32 @@
 from collections import deque
 
 h,w = map(int, input().split())
-A = [['*']*(w+2)] + [['*']+[s for s in input()]+['*'] for _ in range(h)] + [['*']*(w+2)]
+A = [[s for s in input()] for _ in range(h)]
 
-dist_to_black = [[0]*w for _ in range(h)]
+visited = [[-1]*(w) for _ in range(h)]
+dq = deque()
+directions = [[0,1],[1,0],[0,-1],[-1,0]]
 
-# # debug
-# for a in A:
-#     print(a)
-# for a in dist_to_black:
-#     print(a)
+# 初期配置の黒をキューに追加
+for hi in range(h):
+    for wi in range(w):
+        if A[hi][wi] == '#':
+            dq.append([hi,wi])
+            visited[hi][wi] = 0
 
-def bfs(sy,sx):
-    dq = deque([(sy,sx,0)])
-    while dq:
-        y,x,n = dq.popleft()
-        if A[y][x]=='#':
-            return n
-        elif A[y][x]=='.':
-            dq.append([y+1,x,n+1])
-            dq.append([y-1,x,n+1])
-            dq.append([y,x+1,n+1])
-            dq.append([y,x-1,n+1])
+# キューが空になるまで
+while dq:
+    hi,wi = dq.popleft()
+    for d in directions:
+        nhi, nwi = hi+d[0],wi + d[1]
+        # 場外ならスキップ
+        if nhi<0 or nhi>=h or nwi<0 or nwi>=w: continue 
+        # 「黒くしてない白マス」をキューに追加
+        if visited[nhi][nwi] == -1 and A[nhi][nwi] == '.':
+            dq.append([nhi,nwi])
+            visited[nhi][nwi] = visited[hi][wi] + 1
 
 ans = -1
-for i in range(h):
-    for j in range(w):
-        # dist_to_black[i][j] = bfs(i+1,j+1)
-        ans = max(ans, bfs(i+1, j+1))
-
+for x in visited:
+    ans = max(ans,max(x))
 print(ans)
