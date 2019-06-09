@@ -1,28 +1,21 @@
-import math
-
-def combnation(x,y):
-    return math.factorial(x) // (math.factorial(x-y) * math.factorial(y))
-
-
+# fx = fx-1 + fx-2
 N,M = map(int,input().split())
-aa = [0] + [int(input()) for _ in range(M)] + [N]
+aa = [int(input()) for _ in range(M)]
 
-DIV = 10**9+7
+oks = [True for _ in range(N)] + [False] + [False]
+for a in aa:
+    oks[a-1] = False
+dp = [0]*(N+1)
+dp[0]=1
+# print(oks)
+MOD = 10**9+7
 
-ans = 1
-a_prev = aa[0]
-for a in aa[1:]:
-    steps = a - a_prev -1
-    if steps == 0 and a_prev>0 and a < aa[-1]:
-        ans = 0
-        break
-    tmp = 0
-    for i in range(steps//2 + 1):
-        
-        tmp += combnation(steps-i, i)
-        # print(ans, tmp,combnation(steps-i, i), i, steps, a_prev, a)
-    a_prev=a
-    ans = ans*tmp
-    # print('-'*10)
-# print(ans)
-print(ans%DIV)
+for i in range(1,N+1):
+    if i in aa:
+        continue
+    if i==1:
+        dp[1] = dp[0]
+        continue
+    dp[i] = dp[i-1] + dp[i-2]
+    dp[i] %= MOD
+print(dp[N])
