@@ -56,12 +56,12 @@ def make_files(category, name, number, task_num, samples):
     for i in range(task_num):
         ch = chr(i+97)
         # .puファイルとサンプルフォルダ作成
-        with open(f"{contest_dir}/{ch}.py", mode='w'):
+        with open(f"{contest_dir}/{ch}.py", mode='x'):
             os.makedirs(f"{contest_dir}/Samples/{ch}", exist_ok=True)
 
         # サンプルtxt作成
         for si, s in enumerate(samples[i]):
-            with open(f"{contest_dir}/Samples/{ch}/{str(si)}.txt", mode='w') as f:
+            with open(f"{contest_dir}/Samples/{ch}/{str(si)}.txt", mode='x') as f:
                 f.write(s)
 
     #テストスクリプトをコピー
